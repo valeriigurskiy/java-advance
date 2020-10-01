@@ -1,68 +1,30 @@
 package com.oktenweb.javaadvance.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+@Entity
+@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class Movie {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, length = 270)
+    @NotBlank
     private String title;
+    @Positive
+    @Max(200)
     private int duration;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Movie movie = (Movie) o;
-
-        if (id != movie.id) return false;
-        if (duration != movie.duration) return false;
-        return title != null ? title.equals(movie.title) : movie.title == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + duration;
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", duration=" + duration +
-                '}';
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public Movie(int id, String title, int duration) {
-        this.id = id;
-        this.title = title;
-        this.duration = duration;
-    }
 }
